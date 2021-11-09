@@ -55,3 +55,13 @@ function cargarJuegos(){
     return $coleccionJuegos;
 };
 
+/**Solicita al usuario un numero dentro de un rango de valores. 
+ * Si el numero no es valido, lo vuelve a pedir y retorna el numero valido.
+ */
+function solicitarNumeroValido($min,$max){
+    do{
+        echo "Ingrese un numero comprendido entre ".$min. " y " .$max .":";
+    $numeroValido=trim(fgets(STDIN));
+    } while (!($numeroValido>=$min && $numeroValido<=$max));
+    return $numeroValido;
+}
