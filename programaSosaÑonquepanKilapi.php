@@ -3,8 +3,8 @@
 
 include ('tateti.php');
 
-seleccionarOpcion();
 
+seleccionarOpcion();
 function seleccionarOpcion (){
  
     do{
@@ -22,7 +22,7 @@ function seleccionarOpcion (){
         
         switch($eleccion){
             case 1:jugar();break;
-            case 2:;break;
+            case 2:mostrarUnJuego();break;
             case 3:;break;
             case 4:;break;
             case 5:;break;
@@ -52,7 +52,10 @@ function cargarJuegos(){
     $coleccionJuegos[8]=["jugadorCruz"=>"Igor","jugadorCirculo"=>"Lana", "puntosCruz"=>5,"puntosCirculo"=>5];
     $coleccionJuegos[9]=["jugadorCruz"=>"Felix","jugadorCirculo"=>"Mia", "puntosCruz"=>3,"puntosCirculo"=>0];
     $coleccionJuegos[10]=["jugadorCruz"=>"Lana","jugadorCirculo"=>"Mia", "puntosCruz"=>4,"puntosCirculo"=>0];
+    
+
     return $coleccionJuegos;
+
 };
 
 /**Solicita al usuario un numero dentro de un rango de valores. 
@@ -65,3 +68,45 @@ function solicitarNumeroValido($min,$max){
     } while (!($numeroValido>=$min && $numeroValido<=$max));
     return $numeroValido;
 }
+
+/**
+ * 
+*Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
+ * @param array $coleccionJuegos
+ */
+function listarJuegos($coleccionJuegos)
+{
+   echo"Ingrese un numero de juego: ";
+   $num=trim(fgets(STDIN));
+
+   if($num >=0 && $num < count($coleccionJuegos)){
+
+    if($coleccionJuegos[$num]["puntosCruz"] < $coleccionJuegos[$num]["puntosCirculo"] ){
+        $final = "gano O";
+    }elseif($coleccionJuegos[$num]["puntosCruz"] > $coleccionJuegos[$num]["puntosCirculo"] ) {
+        $final = "gano X";
+    } else {
+        $final = "empate";
+    }
+    echo "------RESULTADOS------\n";
+    echo "juego TATETI ".$final. "\n ";
+
+    echo "JUGADOR X: ".$coleccionJuegos[$num]["jugadorCruz"]." obtuvo ".$coleccionJuegos[$num]["puntosCruz"]." puntos \n";
+    echo "JUGADOR O: ".$coleccionJuegos[$num]["jugadorCirculo"]." obtuvo ".$coleccionJuegos[$num]["puntosCirculo"]." puntos \n";
+   }
+   else{
+       echo "ERROR! no existe ese juego intentelo nuevamente\n ".$num;
+   }
+  
+}
+
+function mostrarUnJuego(){
+    $arregloJuegos = cargarJuegos();
+
+    listarJuegos($arregloJuegos);
+}
+
+
+
+
+
