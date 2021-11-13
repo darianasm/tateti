@@ -108,5 +108,41 @@ function mostrarUnJuego(){
 
 
 
+/**Dada una colección de juegos, un indice(un juego) y un jugador, la función
+ * devuelve true si ese jugador gano en ese juego (como X o como O),
+ * false caso contrario. 
+ */
+//array $coleccionJuegos
+//int $i, string $nombreJugador, booleano $gano
+function gano($coleccionJuegos,$i,$nombreJugador){
+    if ($coleccionJuegos[$i]["jugadorCruz"]==$nombreJugador && $coleccionJuegos[$i]["puntosCruz"]>$coleccionJuegos[$i]["puntosCirculo"]){
+        $gano=true;
+    }
+    elseif ($coleccionJuegos[$i]["jugadorCirculo"]==$nombreJugador && $coleccionJuegos[$i]["puntosCirculo"]>$coleccionJuegos[$i]["puntosCruz"]){
+        $gano=true;
+    }else{
+        $gano=false;
+    }
+return $gano;
+}
+/**Dada una colección de juegos y un jugador, retorna el índice de su primer juego ganado. 
+ * Sino ganó ningún juego, la funcion debe retornar -1
+ */
+//array $coleccion
+//string $nombreJugador, int $i, $resultado
+function primerJuegoGanado($coleccion,$nombreJugador){
+    $i=0;
+    $n=count($coleccion);
+    while ($i<$n && (!gano($coleccion,$i,$nombreJugador))){
+        $i++;
+    }
+    if ($i<$n){
+        $resultado=$i;
+    }else{
+        $resultado=-1;
+    }
+    //echo $resultado;
+    return $resultado;
+}
 
 
