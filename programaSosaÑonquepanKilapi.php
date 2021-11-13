@@ -3,7 +3,9 @@
 
 include ('tateti.php');
 
-
+/**
+ * Muestra un menú de opciones a elegir y dependiendo de la elección del usuario realiza las acciones correspondientes.
+ */
 seleccionarOpcion();
 function seleccionarOpcion (){
  
@@ -24,7 +26,7 @@ function seleccionarOpcion (){
             case 1:jugar();break;
             case 2:mostrarUnJuego();break;
             case 3:;break;
-            case 4:;break;
+            case 4:mostrarPorcenJuegosGanados();break;
             case 5:;break;
             case 6:;break;
             case 7: echo "gracias por haber usado el programa";break;
@@ -34,11 +36,11 @@ function seleccionarOpcion (){
 }
 
 
-/**Inicializa una estructura de datos con ejemplos de juegos y retorna 
+/** Inicializa una estructura de datos con ejemplos de juegos y retorna 
  * la colección de juegos indexado de arreglos asociativos que almacena 
  * la información de los juegos que se jugaron. En principio todos los juegos se inventaron.
+ * @return array $coleecionJuegos
  */
-//arreglo $coleccionJuegos
 function cargarJuegos(){
     $coleccionJuegos=[];
     $coleccionJuegos[0]=["jugadorCruz"=>"Igor","jugadorCirculo"=>"Felix", "puntosCruz"=>4,"puntosCirculo"=>0];
@@ -55,11 +57,12 @@ function cargarJuegos(){
     
 
     return $coleccionJuegos;
-
 };
 
-/**Solicita al usuario un numero dentro de un rango de valores. 
+/** Solicita al usuario un numero dentro de un rango de valores. 
  * Si el numero no es valido, lo vuelve a pedir y retorna el numero valido.
+ * @param int $min, $max
+ * @return int $numeroValido 
  */
 function solicitarNumeroValido($min,$max){
     do{
@@ -69,9 +72,8 @@ function solicitarNumeroValido($min,$max){
     return $numeroValido;
 }
 
-/**
- * 
-*Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
+/** 
+ * Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
  * @param array $coleccionJuegos
  */
 function listarJuegos($coleccionJuegos)
@@ -100,20 +102,20 @@ function listarJuegos($coleccionJuegos)
   
 }
 
+
 function mostrarUnJuego(){
     $arregloJuegos = cargarJuegos();
-
     listarJuegos($arregloJuegos);
 }
 
-
-
-/**Dada una colección de juegos, un indice(un juego) y un jugador, la función
+/** Dada una colección de juegos, un indice(un juego) y un jugador, la función
  * devuelve true si ese jugador gano en ese juego (como X o como O),
  * false caso contrario. 
+ * @param array $coleccionJuegos
+ * @param int $i
+ * @param string $nombreJugador
+ * @return boolean $gano
  */
-//array $coleccionJuegos
-//int $i, string $nombreJugador, booleano $gano
 function gano($coleccionJuegos,$i,$nombreJugador){
     if ($coleccionJuegos[$i]["jugadorCruz"]==$nombreJugador && $coleccionJuegos[$i]["puntosCruz"]>$coleccionJuegos[$i]["puntosCirculo"]){
         $gano=true;
@@ -125,11 +127,13 @@ function gano($coleccionJuegos,$i,$nombreJugador){
     }
 return $gano;
 }
-/**Dada una colección de juegos y un jugador, retorna el índice de su primer juego ganado. 
+/** Dada una colección de juegos y un jugador, retorna el índice de su primer juego ganado. 
  * Sino ganó ningún juego, la funcion debe retornar -1
+ * @param array $coleccion
+ * @param string $nombreJugador
+ * @param int $i
+ * @return float $resultado
  */
-//array $coleccion
-//string $nombreJugador, int $i, $resultado
 function primerJuegoGanado($coleccion,$nombreJugador){
     $i=0;
     $n=count($coleccion);
@@ -144,5 +148,94 @@ function primerJuegoGanado($coleccion,$nombreJugador){
     //echo $resultado;
     return $resultado;
 }
+
+/**
+ * Evalúa si el juego fue un empate. si ganó el jugador círculo o el jugador cruz. 
+ * @param int $numJuego;
+ * @return string $resultadoJuego;
+ */
+function evaluaJuego ($numJuego){
+    
+    $puntosX = cargarJuegos()[$numJuego]["puntosCruz"];
+    $puntosO = cargarJuegos()[$numJuego]["puntosCirculo"];
+    
+    if($puntosX < $puntosO){
+    $resultadoJuego = "ganó O";
+    }
+    elseif($puntosX > $puntosO){
+        $resultadoJuego = "ganó X";
+        }
+        elseif($puntosX == $puntosO){
+        $resultadoJuego = "empate";   
+        }
+    
+    return $resultadoJuego;
+}
+
+/**
+ * Verifica si el usuario ingresó un número válido, si no, repite hasta que sea válido. 
+ * @return string $simboloValido;
+ */
+function validarSimbolo(){    
+    
+    do{
+        echo "ingrese símbolo válido, debe ser un 'O' o una 'X': \n";
+        $simboloValido = strtoupper(trim(fgets(STDIN)));
+    }while(!($simboloValido == "O" || $simboloValido == "X"));
+
+return $simboloValido;
+}
+
+/**
+ * Cuenta la cantidad de juegos en total que se han ganado, sin importar el simbolo. 
+ * @return int $resultadoJuego;
+ */
+function cantJuegosGanados(){
+$totalJuegosGanados = 0;
+$cantJuegos = count(cargarJuegos());
+
+for($i=0; $i < $cantJuegos; $i++){
+    
+    if(evaluaJuego($i) == "ganó X" || evaluaJuego($i) == "ganó O"){
+    $totalJuegosGanados++;
+    }
+}
+
+return $totalJuegosGanados;
+}
+
+/**
+ * Cuenta la cantidad de juegos ganados por simbolo. 
+ * @param string $simb
+ * @return int $cantJuegosGanadosSimb
+ */
+function cantJuegosGanadosSimbolo($simb){
+
+    $cantJuegosGanadosSimb = 0;
+    $arrayJuegos = cargarJuegos();
+    
+    for($i=0; $i< count($arrayJuegos); $i++){
+        
+        if(evaluaJuego($i) == "ganó O" && $simb == "O"){
+        $cantJuegosGanadosSimb++;
+        }elseif(evaluaJuego($i) == "ganó X" && $simb == "X"){
+        $cantJuegosGanadosSimb++;
+        }
+    
+    }
+
+return $cantJuegosGanadosSimb;
+}
+
+/**
+ * Calcula el porcentaje de juegos ganados por simbolo y lo muestra por pantalla. 
+ * @return int $cantJuegosGanadosSimb
+ */
+function mostrarPorcenJuegosGanados(){
+$simbolo = validarSimbolo();
+$porcentaje = (100*cantJuegosGanadosSimbolo($simbolo))/cantJuegosGanados();
+echo "el porcentaje de juegos ganados por el símbolo ".$simbolo." es de un: "." $porcentaje"."%\n";
+}
+
 
 
