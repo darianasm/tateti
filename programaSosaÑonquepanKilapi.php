@@ -25,7 +25,7 @@ function seleccionarOpcion (){
         switch($eleccion){
             case 1:jugar();break;
             case 2:mostrarUnJuego();break;
-            case 3:;break;
+            case 3:mostrarPrimerJuegoGanado();break;
             case 4:mostrarPorcenJuegosGanados();break;
             case 5:;break;
             case 6:;break;
@@ -145,8 +145,45 @@ function primerJuegoGanado($coleccion,$nombreJugador){
     }else{
         $resultado=-1;
     }
-    //echo $resultado;
     return $resultado;
+}
+
+/** Solicita al usuario el nombre de un jugador y se muestra en pantalla
+ * su primer juego ganado.
+ * Sino ganó ningún juego se lo indica.
+ * @param array $coleccion
+ * @param string $nombreJugador, $ganador, $jugadorX, $jugadorO
+ * @param int $iJuego, $puntosX, $puntosO
+ * @return float $resultado
+ */
+function mostrarPrimerJuegoGanado(){
+    $coleccion=cargarJuegos();
+    $nombreJugador=solicitarNombreValido();
+    $iJuego=primerJuegoGanado($coleccion,$nombreJugador);
+    if ($iJuego>=0){
+        $ganador=evaluaJuego($iJuego);
+        $jugadorX=strtoupper($coleccion[$iJuego]["jugadorCruz"]);
+        $puntosX=$coleccion[$iJuego]["puntosCruz"];
+        $jugadorO=strtoupper($coleccion[$iJuego]["jugadorCirculo"]);
+        $puntosO=$coleccion[$iJuego]["puntosCirculo"];
+        echo "********************** \n";
+        echo "Juego TATETI: ".$iJuego." ($ganador)\n";
+        echo "Jugador X: ".$jugadorX." obtuvo ".$puntosX." puntos\n";
+        echo "Jugador O: ".$jugadorO." obtuvo ".$puntosO." puntos\n";
+        echo "********************** \n";
+    }elseif ($iJuego==-1) {
+        echo "El jugador ".$nombreJugador." no ganó ningún juego\n";
+    }
+}
+/** Solicita al usuario un nombre de jugador válido (string)
+ * @return string $nombre 
+*/
+function solicitarNombreValido(){
+    do{
+        echo "Ingrese el nombre de un jugador:";
+        $nombre=trim(fgets(STDIN));
+    } while (!is_string($nombre));
+    return $nombre;
 }
 
 /**
