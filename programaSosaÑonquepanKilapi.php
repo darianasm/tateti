@@ -76,22 +76,17 @@ function solicitarNumeroValido($min,$max){
  * Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
  * @param array $coleccionJuegos
  */
-function listarJuegos($coleccionJuegos)
+function mostrarUnJuego()
 {
    echo"Ingrese un numero de juego: ";
    $num=trim(fgets(STDIN));
+   $coleccionJuegos=cargarJuegos();
+   $resultado=evaluaJuego($num);
 
    if($num >=0 && $num < count($coleccionJuegos)){
 
-    if($coleccionJuegos[$num]["puntosCruz"] < $coleccionJuegos[$num]["puntosCirculo"] ){
-        $final = "gano O";
-    }elseif($coleccionJuegos[$num]["puntosCruz"] > $coleccionJuegos[$num]["puntosCirculo"] ) {
-        $final = "gano X";
-    } else {
-        $final = "empate";
-    }
     echo "------RESULTADOS------\n";
-    echo "juego TATETI ".$final. "\n ";
+    echo "juego TATETI ".$resultado. "\n ";
 
     echo "JUGADOR X: ".$coleccionJuegos[$num]["jugadorCruz"]." obtuvo ".$coleccionJuegos[$num]["puntosCruz"]." puntos \n";
     echo "JUGADOR O: ".$coleccionJuegos[$num]["jugadorCirculo"]." obtuvo ".$coleccionJuegos[$num]["puntosCirculo"]." puntos \n";
@@ -102,11 +97,6 @@ function listarJuegos($coleccionJuegos)
   
 }
 
-
-function mostrarUnJuego(){
-    $arregloJuegos = cargarJuegos();
-    listarJuegos($arregloJuegos);
-}
 
 /** Dada una colección de juegos, un indice(un juego) y un jugador, la función
  * devuelve true si ese jugador gano en ese juego (como X o como O),
