@@ -28,7 +28,7 @@ function seleccionarOpcion (){
             case 3:mostrarPrimerJuegoGanado();break;
             case 4:mostrarPorcenJuegosGanados();break;
             case 5:;break;
-            case 6:;break;
+            case 6:ordenarJuegosJugadorO();break;
             case 7: echo "gracias por haber usado el programa";break;
             default: echo "elección ingresada no valida, por favor ingrese otra\n";break;
         }
@@ -274,5 +274,28 @@ $porcentaje = (100*cantJuegosGanadosSimbolo($simbolo))/cantJuegosGanados();
 echo "el porcentaje de juegos ganados por el símbolo ".$simbolo." es de un: "." $porcentaje"."%\n";
 }
 
-
+/**
+ * Muestra en pantalla la estructura ordenada alfabéticamente por jugador O.
+ * La función predefinida uasort ordena el arreglo indexado tal que sus índices
+ * mantienen sus correlaciones con los elementos del arreglo con los que están asociados, 
+ * usando una función de comparación definida, en este caso micmp, 
+ * la cual compara los arreglos asociativos según el indice jugadorO.
+ * La función predefinida print_r muestra información sobre un array de forma legible.
+ * @param array $coleccion
+ */
+function ordenarJuegosJugadorO(){
+    function micmp($a,$b) {
+        if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
+            $orden=0;
+        }elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
+            $orden=-1;
+        }else{
+            $orden=1;
+        }
+        return $orden;
+    }
+    $coleccion=cargarJuegos();
+    uasort($coleccion,'micmp');
+    print_r($coleccion);
+}
 
