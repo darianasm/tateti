@@ -27,7 +27,7 @@ function seleccionarOpcion (){
             case 2:mostrarUnJuego();break;
             case 3:mostrarPrimerJuegoGanado();break;
             case 4:mostrarPorcenJuegosGanados();break;
-            case 5:;break;
+            case 5:jugadorNombre();break;
             case 6:ordenarJuegosJugadorO();break;
             case 7: echo "gracias por haber usado el programa";break;
             default: echo "elección ingresada no valida, por favor ingrese otra\n";break;
@@ -299,3 +299,53 @@ function ordenarJuegosJugadorO(){
     print_r($coleccion);
 }
 
+/*Dado el nombre de un jugador devuelve el resumen de dicho jugador
+ * @param string $nombreJugador
+ * @param array $coleccionJuegos
+ */
+function mostrarResumenJugador($coleccionJuegos,$nombreJugador){
+
+        $cantJuegos = count(cargarJuegos());
+        $empate=0;
+        $ganados=0;
+        $perdidos=0;
+        $puntosAcumulados=0;
+       
+       
+        for($i=0; $i < $cantJuegos; $i++){
+          
+           
+            if ($coleccionJuegos[$i]["jugadorCruz"]==$nombreJugador or $coleccionJuegos[$i]["jugadorCirculo"]==$nombreJugador){
+                $resultado=evaluaJuego($i);
+
+                if($resultado=="ganó O"){
+                    $ganados++;
+                }elseif($resultado =="ganó X"){
+                    $perdidos++;
+                }else{
+                    $empate++;
+                }
+
+                if($coleccionJuegos[$i]["jugadorCruz"] == $nombreJugador){
+                    $puntosAcumulados =$puntosAcumulados + $coleccionJuegos[$i]["puntosCruz"];
+                }
+                else{
+                    $puntosAcumulados = $puntosAcumulados + $coleccionJuegos[$i]["puntosCirculo"];
+                }
+            }
+        }
+             echo"JUGADOR: ".$nombreJugador."\n";
+             echo"GANÓ: ".$ganados."\n";
+             echo"PERDIO: ".$perdidos."\n";
+             echo"EMPATO: ".$empate."\n"; 
+             echo"Total de puntos acumulados ".$puntosAcumulados."\n";
+
+
+} 
+
+function jugadorNombre(){
+    $coleccion=cargarJuegos();
+    $nombreJugador=solicitarNombreValido();
+    $resumen =mostrarResumenJugador($coleccion,$nombreJugador);
+
+}
