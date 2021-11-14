@@ -71,25 +71,37 @@ function solicitarNumeroValido($min,$max){
     } while (!($numeroValido>=$min && $numeroValido<=$max));
     return $numeroValido;
 }
-
+/** 
+ * Dado  un  indice muestra los detalles de dicho juego
+ * @param int $indice
+ */
+function detalleJuego($indice){
+        $coleccionJuegos=cargarJuegos();
+        $ganador=evaluaJuego($indice);
+        $jugadorX=strtoupper($coleccionJuegos[$indice]["jugadorCruz"]);
+        $puntosX=$coleccionJuegos[$indice]["puntosCruz"];
+        $jugadorO=strtoupper($coleccionJuegos[$indice]["jugadorCirculo"]);
+        $puntosO=$coleccionJuegos[$indice]["puntosCirculo"];
+        echo "********************** \n";
+        echo "Juego TATETI: ".$indice." ($ganador)\n";
+        echo "Jugador X: ".$jugadorX." obtuvo ".$puntosX." puntos\n";
+        echo "Jugador O: ".$jugadorO." obtuvo ".$puntosO." puntos\n";
+        echo "********************** \n";
+}
 /** 
  * Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
- * @param array $coleccionJuegos
+ * 
  */
 function mostrarUnJuego()
 {
-   echo"Ingrese un numero de juego: ";
+   echo"Ingrese un número de juego: ";
    $num=trim(fgets(STDIN));
-   $coleccionJuegos=cargarJuegos();
-   $resultado=evaluaJuego($num);
+   $coleccion=cargarJuegos();
 
-   if($num >=0 && $num < count($coleccionJuegos)){
+   if($num >=0 && $num < count($coleccion)){
 
-    echo "------RESULTADOS------\n";
-    echo "juego TATETI ".$resultado. "\n ";
-
-    echo "JUGADOR X: ".$coleccionJuegos[$num]["jugadorCruz"]." obtuvo ".$coleccionJuegos[$num]["puntosCruz"]." puntos \n";
-    echo "JUGADOR O: ".$coleccionJuegos[$num]["jugadorCirculo"]." obtuvo ".$coleccionJuegos[$num]["puntosCirculo"]." puntos \n";
+        $mostrarJuego =detalleJuego($num);
+        echo $mostrarJuego;
    }
    else{
        echo "ERROR! no existe ese juego intentelo nuevamente\n ".$num;
@@ -150,21 +162,17 @@ function mostrarPrimerJuegoGanado(){
     $coleccion=cargarJuegos();
     $nombreJugador=solicitarNombreValido();
     $iJuego=primerJuegoGanado($coleccion,$nombreJugador);
+
     if ($iJuego>=0){
-        $ganador=evaluaJuego($iJuego);
-        $jugadorX=strtoupper($coleccion[$iJuego]["jugadorCruz"]);
-        $puntosX=$coleccion[$iJuego]["puntosCruz"];
-        $jugadorO=strtoupper($coleccion[$iJuego]["jugadorCirculo"]);
-        $puntosO=$coleccion[$iJuego]["puntosCirculo"];
-        echo "********************** \n";
-        echo "Juego TATETI: ".$iJuego." ($ganador)\n";
-        echo "Jugador X: ".$jugadorX." obtuvo ".$puntosX." puntos\n";
-        echo "Jugador O: ".$jugadorO." obtuvo ".$puntosO." puntos\n";
-        echo "********************** \n";
+        echo "PRIMER JUEGO GANADO\n";
+        $primerJuegoGanado=detalleJuego($iJuego);
+        echo $primerJuegoGanado;
+     
     }elseif ($iJuego==-1) {
         echo "El jugador ".$nombreJugador." no ganó ningún juego\n";
     }
 }
+
 /** Solicita al usuario un nombre de jugador válido (string)
  * @return string $nombre 
 */
