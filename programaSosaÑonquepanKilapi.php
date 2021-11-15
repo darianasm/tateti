@@ -88,24 +88,18 @@ function detalleJuego($indice){
         echo "********************** \n";
 }
 /** 
- * Dado  un  juego,  muestre  en  pantalla  los  datos  de dicho juego
+ * Dado  un  juego,  muestra  en  pantalla  los  datos  de dicho juego
  * 
  */
-function mostrarUnJuego()
-{
-   echo"Ingrese un número de juego: ";
-   $num=trim(fgets(STDIN));
+function mostrarUnJuego(){
+    //array $coleccion
+    //int $totalJuegos, $num
+    //string $mostrarJuego
    $coleccion=cargarJuegos();
-
-   if($num >=0 && $num < count($coleccion)){
-
-        $mostrarJuego =detalleJuego($num);
-        echo $mostrarJuego;
-   }
-   else{
-       echo "ERROR! no existe ese juego intentelo nuevamente\n ".$num;
-   }
-  
+   $totalJuegos=count($coleccion)-1;
+   $num=solicitarNumeroValido(0,$totalJuegos);
+   $mostrarJuego=detalleJuego($num);
+   echo $mostrarJuego;
 }
 
 
