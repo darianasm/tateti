@@ -54,8 +54,7 @@ function cargarJuegos(){
     $coleccionJuegos[8]=["jugadorCruz"=>"Igor","jugadorCirculo"=>"Lana", "puntosCruz"=>5,"puntosCirculo"=>5];
     $coleccionJuegos[9]=["jugadorCruz"=>"Felix","jugadorCirculo"=>"Mia", "puntosCruz"=>3,"puntosCirculo"=>0];
     $coleccionJuegos[10]=["jugadorCruz"=>"Lana","jugadorCirculo"=>"Mia", "puntosCruz"=>4,"puntosCirculo"=>0];
-    
-
+  
     return $coleccionJuegos;
 };
 
@@ -345,5 +344,7 @@ function jugadorNombre(){
     $coleccion=cargarJuegos();
     $nombreJugador=solicitarNombreValido();
     $resumen =mostrarResumenJugador($coleccion,$nombreJugador);
-
 }
+
+   
+   
