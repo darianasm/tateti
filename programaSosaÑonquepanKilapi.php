@@ -27,7 +27,7 @@ function seleccionarOpcion (){
             case 2:mostrarUnJuego();break;
             case 3:mostrarPrimerJuegoGanado();break;
             case 4:mostrarPorcenJuegosGanados();break;
-            case 5:jugadorNombre();break;
+            case 5:mostrarResumenJugador();break;
             case 6:ordenarJuegosJugadorO();break;
             case 7: echo "gracias por haber usado el programa";break;
             default: echo "elección ingresada no valida, por favor ingrese otra\n";break;
@@ -294,35 +294,47 @@ function ordenarJuegosJugadorO(){
  * @param string $nombreJugador
  * @param array $coleccionJuegos
  */
-function mostrarResumenJugador($coleccionJuegos,$nombreJugador){
+function mostrarResumenJugador(){
+        /*Inicializar variables*/
+        $empate= 0;
+        $ganados= 0;
+        $perdidos= 0;
+        $puntosAcumulados= 0;
 
         $cantJuegos = count(cargarJuegos());
-        $empate=0;
-        $ganados=0;
-        $perdidos=0;
-        $puntosAcumulados=0;
-       
-       
         for($i=0; $i < $cantJuegos; $i++){
           
-           
-            if ($coleccionJuegos[$i]["jugadorCruz"]==$nombreJugador or $coleccionJuegos[$i]["jugadorCirculo"]==$nombreJugador){
+            $jugadorX = cargarJuegos()[$i]["jugadorCruz"];
+            $jugadorO = cargarJuegos()[$i]["jugadorCirculo"];
+            $puntosX = cargarJuegos()[$i]["puntosCruz"];
+            $puntosO = cargarJuegos()[$i]["puntosCirculo"];
+            $nombreJugador=solicitarNombreValido();
+            if ($jugadorX == $nombreJugador or $jugadorO == $nombreJugador){
+               
                 $resultado=evaluaJuego($i);
+                if($jugadorX == $nombreJugador){
 
-                if($resultado=="ganó O"){
-                    $ganados++;
-                }elseif($resultado =="ganó X"){
-                    $perdidos++;
-                }else{
-                    $empate++;
-                }
+                    if($resultado =="ganó X"){
+                        $ganados++;
+                    }elseif($resultado == "ganó O"){
+                        $perdidos++;
+                    }else{
+                        $empate++;
+                    }
+                    $puntosAcumulados =$puntosAcumulados + $puntosX;
 
-                if($coleccionJuegos[$i]["jugadorCruz"] == $nombreJugador){
-                    $puntosAcumulados =$puntosAcumulados + $coleccionJuegos[$i]["puntosCruz"];
+                }elseif($jugadorO == $nombreJugador){
+
+                    if($resultado =="ganó O"){
+                        $ganados++;
+                    }elseif($resultado == "ganó X"){
+                        $perdidos++;
+                    }else{
+                        $empate++;
+                    }
+                    $puntosAcumulados =$puntosAcumulados + $puntosO;
                 }
-                else{
-                    $puntosAcumulados = $puntosAcumulados + $coleccionJuegos[$i]["puntosCirculo"];
-                }
+                
             }
         }
              echo"JUGADOR: ".$nombreJugador."\n";
@@ -334,11 +346,6 @@ function mostrarResumenJugador($coleccionJuegos,$nombreJugador){
 
 } 
 
-function jugadorNombre(){
-    $coleccion=cargarJuegos();
-    $nombreJugador=solicitarNombreValido();
-    $resumen =mostrarResumenJugador($coleccion,$nombreJugador);
-}
 
    
    
