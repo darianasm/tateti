@@ -23,7 +23,7 @@ function seleccionarOpcion (){
         $eleccion = trim(fgets(STDIN));
         
         switch($eleccion){
-            case 1:jugar();break;
+            case 1:mostrarAgregarJuego();break;
             case 2:mostrarUnJuego();break;
             case 3:mostrarPrimerJuegoGanado();break;
             case 4:mostrarPorcenJuegosGanados();break;
@@ -54,7 +54,7 @@ function cargarJuegos(){
     $coleccionJuegos[8]=["jugadorCruz"=>"Igor","jugadorCirculo"=>"Lana", "puntosCruz"=>5,"puntosCirculo"=>5];
     $coleccionJuegos[9]=["jugadorCruz"=>"Felix","jugadorCirculo"=>"Mia", "puntosCruz"=>3,"puntosCirculo"=>0];
     $coleccionJuegos[10]=["jugadorCruz"=>"Lana","jugadorCirculo"=>"Mia", "puntosCruz"=>4,"puntosCirculo"=>0];
-  
+    
     return $coleccionJuegos;
 };
 
@@ -293,7 +293,7 @@ echo "el porcentaje de juegos ganados por el símbolo ".$simbolo." es de un: "."
  * usando una función de comparación definida, en este caso micmp, 
  * la cual compara los arreglos asociativos según el indice jugadorO.
  * La función predefinida print_r muestra información sobre un array de forma legible.
- * @param array $coleccion
+ * @param array 
  */
 function ordenarJuegosJugadorO(){
     function micmp($a,$b) {
@@ -361,8 +361,29 @@ function mostrarResumenJugador(){
              echo"EMPATO: ".$empate."\n"; 
              echo"Total de puntos acumulados ".$puntosAcumulados."\n";
 
-
 } 
+/**Dado una colección  de  juegos y  un  juego, la  función retorna la colección modificada 
+ * al agregarse el nuevo juego
+ * @param array $coleccionJuegos
+ * @param array $juego
+ */
+function agregarJuego($coleccionJuegos,$juego){
+    array_push($coleccionJuegos,$juego);
+    return $coleccionJuegos;
+}
+
+function mostrarAgregarJuego(){
+    $coleccion = cargarJuegos();
+    $juegoNuevo = jugar();
+    $modificada = agregarJuego($coleccion,$juegoNuevo);
+    print_r($modificada);
+}
+
+
+
+
+
+
 
 
    
