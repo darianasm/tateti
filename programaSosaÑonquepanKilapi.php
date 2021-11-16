@@ -173,8 +173,29 @@ function solicitarNombreValido(){
     do{
         echo "Ingrese el nombre de un jugador:";
         $nombre=trim(fgets(STDIN));
-    } while (!is_string($nombre));
+    } while (!esJugador($nombre));
     return $nombre;
+}
+
+/** Chequea que un nombre dado haya sido jugador
+ * @param string $nombre
+ * @return bool $resultado
+*/
+function esJugador($nombre){
+    //array $coleccion
+    //int $cantJuegos, $juegos,
+    $coleccion=cargarJuegos();
+    $cantJuegos = count($coleccion);
+    foreach ($coleccion as $juegos){
+        echo $juegos["jugadorCruz"];
+        echo $juegos["jugadorCirculo"];
+        if ($juegos["jugadorCruz"]==$nombre OR $juegos["jugadorCirculo"]==$nombre){
+            $resultado=true;
+        }else{
+            $resultado=false;
+        }
+    }
+    return $resultado;
 }
 
 /**
