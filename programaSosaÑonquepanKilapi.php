@@ -290,12 +290,9 @@ function ordenarJuegosJugadorO(){
     print_r($coleccion);
 }
 
-/*Dado el nombre de un jugador devuelve el resumen de dicho jugador
- * @param string $nombreJugador
- * @param array $coleccionJuegos
- */
+//Dado el nombre de un jugador devuelve el resumen de dicho jugador
 function mostrarResumenJugador(){
-        /*Inicializar variables*/
+        //Inicializar variables
         $empate= 0;
         $ganados= 0;
         $perdidos= 0;
@@ -321,7 +318,7 @@ function mostrarResumenJugador(){
                     }else{
                         $empate++;
                     }
-                    $puntosAcumulados =$puntosAcumulados + $puntosX;
+                    $puntosAcumulados = $puntosAcumulados + $puntosX;
 
                 }elseif($jugadorO == $nombreJugador){
 
@@ -332,7 +329,7 @@ function mostrarResumenJugador(){
                     }else{
                         $empate++;
                     }
-                    $puntosAcumulados =$puntosAcumulados + $puntosO;
+                    $puntosAcumulados = $puntosAcumulados + $puntosO;
                 }
                 
             }
