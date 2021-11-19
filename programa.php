@@ -223,17 +223,18 @@ function solicitarNombreValido($coleccion){
 */
 function esJugador($nombre, $coleccion){
     //array $coleccion
-    //int $cantJuegos, $juegos,
+    //int $cantJuegos, $i
     $cantJuegos = count($coleccion);
-
-
-    for($i=0; $i < $cantJuegos; $i++){
+    $i=0;
+    $resultado=false;
+    while ($i<$cantJuegos && $resultado==false){
         if ($coleccion[$i]["jugadorCruz"]==$nombre or $coleccion[$i]["jugadorCirculo"]==$nombre){
-            return true;
+            $resultado=true;
         }else{
-            return false;
+            $i++;
         }
     }
+    return $resultado;
 }
 
 
