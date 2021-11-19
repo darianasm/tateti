@@ -357,13 +357,13 @@ function mostrarResumenJugador($coleccionTotal){
     $puntosAcumulados= 0;
 
     $cantJuegos = count($coleccionTotal);
+    $nombreJugador=solicitarNombreValido($coleccionTotal);
     for($i=0; $i < $cantJuegos; $i++){
       
         $jugadorX = $coleccionTotal[$i]["jugadorCruz"];
         $jugadorO = $coleccionTotal[$i]["jugadorCirculo"];
         $puntosX = $coleccionTotal[$i]["puntosCruz"];
         $puntosO = $coleccionTotal[$i]["puntosCirculo"];
-        $nombreJugador=solicitarNombreValido($coleccionTotal);
         $resultado=evaluaJuego($i, $coleccionTotal);
             if($jugadorX == $nombreJugador){
                 //Cuando el jugador es X
