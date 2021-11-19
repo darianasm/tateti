@@ -19,7 +19,7 @@ include ('tateti.php');
 
 //Inicialización de variables:
 $coleccionTotal=cargarJuegos();
-
+print_r($coleccionTotal);
 
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
@@ -225,14 +225,15 @@ function esJugador($nombre, $coleccion){
     //array $coleccion
     //int $cantJuegos, $juegos,
     $cantJuegos = count($coleccion);
-    foreach ($coleccion as $juegos){
-        if ($juegos["jugadorCruz"]==$nombre OR $juegos["jugadorCirculo"]==$nombre){
-            $resultado=true;
+
+
+    for($i=0; $i < $cantJuegos; $i++){
+        if ($coleccion[$i]["jugadorCruz"]==$nombre or $coleccion[$i]["jugadorCirculo"]==$nombre){
+            return true;
         }else{
-            $resultado=false;
+            return false;
         }
     }
-    return $resultado;
 }
 
 
