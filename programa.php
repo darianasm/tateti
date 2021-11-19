@@ -211,10 +211,11 @@ function mostrarPrimerJuegoGanado($coleccionTotal){
 function solicitarNombreValido($coleccion){
     do{
         echo "Ingrese el nombre de un jugador:";
-        $nombre=strtoupper(trim(fgets(STDIN)));
+        $nombre=trim(fgets(STDIN));
     } while (!esJugador($nombre, $coleccion));
     return $nombre;
 }
+
 
 /** Chequea que un nombre dado haya sido jugador
  * @param string $nombre
@@ -314,7 +315,7 @@ function cantJuegosGanadosSimbolo($simb, $coleccionTotal){
  * Calcula el porcentaje de juegos ganados por simbolo y lo muestra por pantalla. 
  * @return int $cantJuegosGanadosSimb
  */
-function mostrarPorcenJuegosGanados(){
+function mostrarPorcenJuegosGanados($coleccionTotal){
     $simbolo = validarSimbolo();
     $porcentaje = (100*cantJuegosGanadosSimbolo($simbolo, $coleccionTotal))/cantJuegosGanados($coleccionTotal);
     echo "el porcentaje de juegos ganados por el símbolo ".$simbolo." es de un: "." $porcentaje"."%\n";
