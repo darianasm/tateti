@@ -268,7 +268,7 @@ function evaluaJuego ($numJuego, $coleccionJuegos){
  * @return string $simboloValido;
  */
 function validarSimbolo(){    
-    
+//string $simboloValido    
     do{
         echo "ingrese símbolo válido, debe ser un 'O' o una 'X': \n";
         $simboloValido = strtoupper(trim(fgets(STDIN)));
@@ -279,14 +279,16 @@ return $simboloValido;
 
 /**
  * Cuenta la cantidad de juegos en total que se han ganado, sin importar el simbolo. 
- * @return int $resultadoJuego;
+ * @param array $coleccion;
+ * @return int $totalJuegosGanados;
  */
-function cantJuegosGanados($coleccionTotal){
+function cantJuegosGanados($coleccion){
+//int $totalJuegosGanados, $cantJuegos;    
     $totalJuegosGanados = 0;
-    $cantJuegos = count($coleccionTotal);
+    $cantJuegos = count($coleccion);
     
     for($i=0; $i < $cantJuegos; $i++){
-        if(evaluaJuego($i, $coleccionTotal) == "ganó X" || evaluaJuego($i, $coleccionTotal) == "ganó O"){
+        if(evaluaJuego($i, $coleccion) == "ganó X" || evaluaJuego($i, $coleccion) == "ganó O"){
         $totalJuegosGanados++;
         }
     }
@@ -297,18 +299,18 @@ function cantJuegosGanados($coleccionTotal){
 /**
  * Cuenta la cantidad de juegos ganados por simbolo. 
  * @param string $simb
+ * @param array $coleccion;
  * @return int $cantJuegosGanadosSimb
  */
 function cantJuegosGanadosSimbolo($simb, $coleccion){
-
+// int $cantJuegosGanadosSimb;
     $cantJuegosGanadosSimb = 0;
-    $arrayJuegos = $coleccion;
     
-    for($i=0; $i< count($arrayJuegos); $i++){
+    for($i=0; $i< count($coleccion); $i++){
         
-        if(evaluaJuego($i, $arrayJuegos) == "ganó O" && $simb == "O"){
+        if(evaluaJuego($i, $coleccion) == "ganó O" && $simb == "O"){
         $cantJuegosGanadosSimb++;
-        }elseif(evaluaJuego($i, $arrayJuegos) == "ganó X" && $simb == "X"){
+        }elseif(evaluaJuego($i, $coleccion) == "ganó X" && $simb == "X"){
         $cantJuegosGanadosSimb++;
         }   
     }
@@ -316,10 +318,13 @@ function cantJuegosGanadosSimbolo($simb, $coleccion){
 }
 
 /**
- * Calcula el porcentaje de juegos ganados por simbolo y lo muestra por pantalla. 
+ * Calcula el porcentaje de juegos ganados por simbolo y lo muestra por pantalla.
+ * @param array $coleccion 
  * @return int $cantJuegosGanadosSimb
  */
 function mostrarPorcenJuegosGanados($coleccion){
+//string $simbolo
+//float $porcentaje;
     $simbolo = validarSimbolo();
     $porcentaje = (100*cantJuegosGanadosSimbolo($simbolo, $coleccion))/cantJuegosGanados($coleccion);
     echo "el porcentaje de juegos ganados por el símbolo ".$simbolo." es de un: "." $porcentaje"."%\n";
@@ -333,9 +338,10 @@ function mostrarPorcenJuegosGanados($coleccion){
  * usando una función de comparación definida, en este caso micmp, 
  * la cual compara los arreglos asociativos según el indice jugadorO.
  * La función predefinida print_r muestra información sobre un array de forma legible.
- * @param array 
+ * @param array coleccion;
  */
-function ordenarJuegosJugadorO($coleccionTotal){
+function ordenarJuegosJugadorO($coleccion){
+//float $orden;
     function micmp($a,$b) {
         if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
             $orden=0;
@@ -346,29 +352,32 @@ function ordenarJuegosJugadorO($coleccionTotal){
         }
         return $orden;
     }
-    $coleccion=$coleccionTotal;
+
     uasort($coleccion,'micmp');
     print_r($coleccion);
 }
 
 
-//Dado el nombre de un jugador devuelve el resumen de dicho jugador
-function mostrarResumenJugador($coleccionTotal){
-    //Inicializar variables
+/** Dado el nombre de un jugador devuelve el resumen de dicho jugador
+* @param array $coleccion 
+*/
+function mostrarResumenJugador($coleccion){
+//int $empate, $ganados, $perdidos, $puntosAcumulados, cantJuegos, $puntosX, $puntosO, $puntosAcumulados;
+//string $nombreJugador, $jugadorX, $jugadorO, $resultado;
     $empate= 0;
     $ganados= 0;
     $perdidos= 0;
     $puntosAcumulados= 0;
 
-    $cantJuegos = count($coleccionTotal);
-    $nombreJugador=solicitarNombreValido($coleccionTotal);
+    $cantJuegos = count($coleccion);
+    $nombreJugador=solicitarNombreValido($coleccion);
     for($i=0; $i < $cantJuegos; $i++){
       
-        $jugadorX = $coleccionTotal[$i]["jugadorCruz"];
-        $jugadorO = $coleccionTotal[$i]["jugadorCirculo"];
-        $puntosX = $coleccionTotal[$i]["puntosCruz"];
-        $puntosO = $coleccionTotal[$i]["puntosCirculo"];
-        $resultado=evaluaJuego($i, $coleccionTotal);
+        $jugadorX = $coleccion[$i]["jugadorCruz"];
+        $jugadorO = $coleccion[$i]["jugadorCirculo"];
+        $puntosX = $coleccion[$i]["puntosCruz"];
+        $puntosO = $coleccion[$i]["puntosCirculo"];
+        $resultado=evaluaJuego($i, $coleccion);
             if($jugadorX == $nombreJugador){
                 //Cuando el jugador es X
                 if($resultado =="ganó X"){
