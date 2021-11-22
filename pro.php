@@ -123,7 +123,7 @@ function detalleJuego($indice, $coleccionTotal){
  * @return int $numeroValido 
  */
 function solicitarNumeroValido($minNum,$maxNum){
-    "Ingrese un numero comprendido entre ".$minNum. " y " .$maxNum .":";
+    echo "Ingrese un numero comprendido entre ".$minNum. " y " .$maxNum .":";
     $numeroValido=solicitarNumeroEntre($minNum, $maxNum);
     return $numeroValido;
 }
