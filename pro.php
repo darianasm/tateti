@@ -1,6 +1,6 @@
 <?php
 
-include ('tateti.php');
+include_once('tateti.php');
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -93,7 +93,6 @@ function jugarTateti($coleccion){
     //array $juegoNuevo
     $juegoNuevo = jugar();
     $coleccionMod = agregarJuego($coleccion,$juegoNuevo);
-    print_r($coleccionMod);
     return $coleccionMod;
 }
 
@@ -334,26 +333,29 @@ function mostrarPorcenJuegosGanados($coleccion){
  * Muestra en pantalla la estructura ordenada alfabéticamente por jugador O.
  * La función predefinida uasort ordena el arreglo indexado tal que sus índices
  * mantienen sus correlaciones con los elementos del arreglo con los que están asociados, 
- * usando una función de comparación definida, en este caso micmp, 
- * la cual compara los arreglos asociativos según el indice jugadorO.
+ * usando una función de comparación definida, en este caso micmp. 
  * La función predefinida print_r muestra información sobre un array de forma legible.
- * @param array coleccion;
+ * @param array coleccion
  */
 function ordenarJuegosJugadorO($coleccion){
-    //int $orden;
-    function micmp($a,$b) {
-        if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
-            $orden=0;
-        }elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
-            $orden=-1;
-        }else{
-            $orden=1;
-        }
-        return $orden;
-    }
-
     uasort($coleccion,'micmp');
     print_r($coleccion);
+}
+
+/**
+ * Compara los valores de "jugadorCirculo" de los arreglos asociativos,
+ * y les asigna un orden. 
+ * @return int $orden
+ */
+function micmp($a,$b) {
+    if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
+        $orden=0;
+    }elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
+        $orden=-1;
+    }else{
+        $orden=1;
+    }
+    return $orden;
 }
 
 
