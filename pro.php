@@ -92,6 +92,7 @@ function agregarJuego($coleccionJuegos,$juego){
 function jugarTateti($coleccion){
     //array $juegoNuevo
     $juegoNuevo = jugar();
+    imprimirResultado($juegoNuevo);
     $coleccionMod = agregarJuego($coleccion,$juegoNuevo);
     return $coleccionMod;
 }
