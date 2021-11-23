@@ -343,14 +343,14 @@ function ordenarJuegosJugadorO($coleccion){
 /**
  * Compara los valores de "jugadorCirculo" de los arreglos asociativos,
  * y les asigna un orden. 
- * @param string $a
- * @param string $b
+ * @param array $juegoA
+ * @param array $juegoB
  * @return int $orden
  */
-function micmp($a,$b){
-    if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
+function micmp($juegoA,$juegoB){
+    if ($juegoA["jugadorCirculo"]==$juegoB["jugadorCirculo"]){
         $orden=0;
-    }elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
+    }elseif($juegoA["jugadorCirculo"]<$juegoB["jugadorCirculo"]){
         $orden=-1;
     }else{
         $orden=1;
