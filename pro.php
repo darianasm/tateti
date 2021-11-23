@@ -347,7 +347,7 @@ function ordenarJuegosJugadorO($coleccion){
  * @param string $b
  * @return int $orden
  */
-function micmp($a,$b) {
+function micmp($a,$b){
     if ($a["jugadorCirculo"]==$b["jugadorCirculo"]){
         $orden=0;
     }elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
