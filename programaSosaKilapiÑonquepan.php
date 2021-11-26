@@ -69,8 +69,7 @@ function cargarJuegos(){
     $coleccionJuegos[7]=["jugadorCruz"=>"MIA","jugadorCirculo"=>"FELIX", "puntosCruz"=>4,"puntosCirculo"=>0];
     $coleccionJuegos[8]=["jugadorCruz"=>"IGOR","jugadorCirculo"=>"LANA", "puntosCruz"=>5,"puntosCirculo"=>5];
     $coleccionJuegos[9]=["jugadorCruz"=>"FELIX","jugadorCirculo"=>"MIA", "puntosCruz"=>3,"puntosCirculo"=>0];
-    $coleccionJuegos[10]=["jugadorCruz"=>"LANA","jugadorCirculo"=>"MIA", "puntosCruz"=>4,"puntosCirculo"=>0];
-    
+    $coleccionJuegos[10]=["jugadorCruz"=>"LANA","jugadorCirculo"=>"MIA", "puntosCruz"=>4,"puntosCirculo"=>0];    
     return $coleccionJuegos;
 }
 
@@ -194,7 +193,7 @@ function primerJuegoGanado($coleccion,$nombre){
 function mostrarPrimerJuegoGanado($coleccion){
     //string $nombreJugador;
     //int $iJuego;
-    $nombreJugador=solicitarNombreValido($coleccion);
+    $nombreJugador=solicitarNombreValido();
     $iJuego=primerJuegoGanado($coleccion,$nombreJugador);
 
     if ($iJuego>=0){
@@ -210,8 +209,9 @@ function mostrarPrimerJuegoGanado($coleccion){
  * @param array $coleccionJuegos
  * @return string $nombre 
 */
-function solicitarNombreValido($coleccionJuegos){
+function solicitarNombreValido(){
     //string nombre;
+    $coleccionJuegos=cargarJuegos();
     do{
         echo "Ingrese el nombre de un jugador:";
         $nombre=strtoupper(trim(fgets(STDIN)));
@@ -366,8 +366,8 @@ function micmp($juegoA,$juegoB){
 * @param array $coleccion 
 * @return array $resumen
 */
-function resumenJugador($coleccion){
-    //int $i $empate, $ganados, $perdidos, $puntosAcumulados, cantJuegos, $puntosX, $puntosO, $puntosAcumulados;
+function resumenJugador($coleccion,$nombre){
+    //int $i, $empate, $ganados, $perdidos, $puntosAcumulados, cantJuegos, $puntosX, $puntosO, $puntosAcumulados;
     //string $nombreJugador, $jugadorX, $jugadorO, $resultado;
     $empate= 0;
     $ganados= 0;
@@ -376,7 +376,6 @@ function resumenJugador($coleccion){
   
    
     $cantJuegos = count($coleccion);
-    $nombreJugador=solicitarNombreValido($coleccion);
     
     for($i=0; $i < $cantJuegos; $i++){
         $jugadorX =$coleccion[$i]["jugadorCruz"];
@@ -386,7 +385,7 @@ function resumenJugador($coleccion){
       
         $resultado=evaluaJuego($i, $coleccion);
        
-            if( $jugadorX == $nombreJugador){
+            if( $jugadorX == $nombre){
                 //si el jugador es X
                 if($resultado =="ganó X"){
                     $ganados++;
@@ -397,7 +396,7 @@ function resumenJugador($coleccion){
                 }
                 $puntosAcumulados = $puntosAcumulados + $puntosX;
 
-            }elseif($jugadorO == $nombreJugador){
+            }elseif($jugadorO == $nombre){
                 //si el jugador es O
                 if($resultado =="ganó O"){
                     $ganados++;
@@ -410,8 +409,9 @@ function resumenJugador($coleccion){
             }
            
     }
+    
     $resumen = [
-        "jugador" => $nombreJugador,
+        "jugador" => $nombre,
         "gano" => $ganados,
         "perdio" => $perdidos,
         "empato" => $empate,
@@ -431,7 +431,8 @@ function resumenJugador($coleccion){
 
 function mostrarResumenJugador($coleccionTotal){
     //array $resumen
-    $resumen=resumenJugador($coleccionTotal);
+    $nombreJugador=solicitarNombreValido();
+    $resumen=resumenJugador($coleccionTotal,$nombreJugador);
     echo "********************** \n";
      echo"JUGADOR: ".$resumen["jugador"]."\n";
      echo"GANÓ: ".$resumen["gano"]."\n";
