@@ -193,7 +193,7 @@ function primerJuegoGanado($coleccion,$nombre){
 function mostrarPrimerJuegoGanado($coleccion){
     //string $nombreJugador;
     //int $iJuego;
-    $nombreJugador=solicitarNombreValido();
+    $nombreJugador=solicitarNombreValido($coleccion);
     $iJuego=primerJuegoGanado($coleccion,$nombreJugador);
 
     if ($iJuego>=0){
@@ -209,9 +209,9 @@ function mostrarPrimerJuegoGanado($coleccion){
  * @param array $coleccionJuegos
  * @return string $nombre 
 */
-function solicitarNombreValido(){
+function solicitarNombreValido($coleccionTotal){
     //string nombre;
-    $coleccionJuegos=cargarJuegos();
+    $coleccionJuegos=$coleccionTotal;
     do{
         echo "Ingrese el nombre de un jugador:";
         $nombre=strtoupper(trim(fgets(STDIN)));
@@ -431,7 +431,7 @@ function resumenJugador($coleccion,$nombre){
 
 function mostrarResumenJugador($coleccionTotal){
     //array $resumen
-    $nombreJugador=solicitarNombreValido();
+    $nombreJugador=solicitarNombreValido($coleccionTotal);
     $resumen=resumenJugador($coleccionTotal,$nombreJugador);
     echo "********************** \n";
      echo"JUGADOR: ".$resumen["jugador"]."\n";
