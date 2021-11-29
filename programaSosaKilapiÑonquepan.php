@@ -127,6 +127,10 @@ function detalleJuego($indice, $coleccionTotal){
 function solicitarNumeroValido($minNum,$maxNum){
     echo "Ingrese un numero comprendido entre ".$minNum. " y " .$maxNum .":";
     $numeroValido=solicitarNumeroEntre($minNum, $maxNum);
+    while(!is_numeric($numeroValido)){
+    echo "debe ingresar un número, intente otra vez: ";
+    $numeroValido=solicitarNumeroEntre($minNum, $maxNum);  
+    }
     return $numeroValido;
 }
 
